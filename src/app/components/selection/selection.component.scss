@@ -1,0 +1,154 @@
+main {
+    margin: 2rem 10%;
+    width: 80%;
+
+    .headerArea {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        p {
+            margin: 0.25rem 0rem;
+        }
+
+        .left {
+            width: 60%;
+        }
+
+        .right {
+            width: 40%;
+
+            padding-left: 2rem;
+            border-left: .2rem solid #666;
+
+            .value {
+                font-size: 1.75rem;
+            }
+        }
+    }
+
+    
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 0rem;
+    }
+
+    h2 {
+        margin-bottom: 0rem;
+    }
+
+    .planetsArea, .vehiclesArea {
+        margin-top: 3rem;
+    }
+
+    .planetsSection, .vehiclesSection {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .planet {
+            margin: 1rem;
+            cursor: pointer;
+            position: relative;
+
+            img {
+
+                &:hover {
+                    border: .1rem solid #666;
+                    -webkit-box-shadow: 2px 4px 20px 3px rgba(209,138,90,1);
+                    -moz-box-shadow: 2px 4px 20px 3px rgba(209,138,90,1);
+                    box-shadow: 2px 4px 20px 3px rgba(209,138,90,1);
+                }
+
+                &.chosenVehicle {
+                    width: 50px;
+                    height: 50px;
+
+                    position: absolute;
+                    top: 0rem;
+                    left: 0px;
+                    
+                    border: none;
+                    padding: 0.25rem;
+                }
+            }
+
+            &.isSelected {
+                -webkit-box-shadow: 2px 4px 20px 3px rgba(237,181,12,1);
+                -moz-box-shadow: 2px 4px 20px 3px rgba(237,181,12,1);
+                box-shadow: 2px 4px 20px 3px rgba(237,181,12,1);
+            }
+        }
+
+        .vehicle {
+            margin: 1.5rem;
+            position: relative;
+
+            .name {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            img {
+                height: 150px;
+                width: 175px;
+            }
+
+            &.notAvailable {
+                opacity: .5;
+                cursor: not-allowed;
+            }
+
+            .selectedText {
+                position: absolute;
+                top: 0rem;
+                left: 0rem;
+
+                display: block;
+                width: 100%; 
+
+                background-color: #666;
+                
+                padding: .5rem 0rem;
+                
+                text-align: center;
+                color: #FFF;
+            }
+        }
+
+        img {
+            width: 200px;
+            height: auto;
+            max-height: 250px;
+
+            border: .1rem solid #999;
+
+            padding: .5rem;
+        }
+    }
+
+    input[type='button'] {
+
+        width: 300px;
+
+        padding: 1rem;
+        border-radius: .5rem;
+
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+
+        font-size: 1.5rem;
+        text-transform: capitalize;
+        word-spacing: .25rem;
+    }
+
+    .buttonArea {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+}

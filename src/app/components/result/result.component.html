@@ -1,0 +1,18 @@
+<div class="draggable" id="draggable"
+    draggable="true" 
+    (dragstart)="drag($event)" >
+    <img src="https://s3.ap-south-1.amazonaws.com/content.angularvidhya.com/1043/donlon.PNG" width="150" height="auto"/>  
+</div>
+
+<div class="droppable"
+    (drop)="drop($event, '1st Droppable')" 
+    (dragover)="allowDrop($event)">
+    1st Droppable
+</div>
+
+
+<div class="droppable"
+    (drop)="drop($event, '2ndDroppable')" 
+    (dragover)="allowDrop($event)">
+    2nd Droppable
+</div>

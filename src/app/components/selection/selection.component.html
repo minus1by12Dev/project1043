@@ -1,0 +1,51 @@
+<main>
+
+    <section class="headerArea">
+
+        <section class="left">
+            <h1>Finding Falcone</h1>
+            <p>Select 4 planets to search (out of the total 6)</p>
+            <p>Select which space vehicles to send to these planets</p>
+        </section>
+    
+        <section class="right">
+            <p>Expected Time to Travel - </p>
+            <p class="value">{{timeToTravel}} hrs</p>
+        </section>
+
+    </section>
+
+    <section class="planetsArea">
+        <h2>All Planets ( Selected {{planetSelectedCount}} / 4 | &nbsp;Vehicles Assigned {{planetAssignedVehicles}} / 4 )</h2>
+        <section class="planetsSection">
+            <div *ngFor="let planet of planets" class="planet" (click)="selectThisPlanet(planet)" [ngClass]="{'isSelected' : planet.isSelected}"
+                (drop)="connectVehicleToPlanet($event, planet)" (dragover)="allowDrop($event)">
+                <img [attr.src]="'assets/' + planet.name.toLowerCase() + '.PNG'" /> 
+                <img *ngIf = "planet.assignedVehicle" class="chosenVehicle" [attr.src]="'assets/' + planet.assignedVehicle.name.toLowerCase() + '.PNG'" >
+            </div>
+        </section>
+    </section>
+
+    <section class="vehiclesArea">
+        <h2 class="text-right">All Vehicles <small>( Drag and Drop a vehicle to a selected planet, to choose that vehicle for that planet )</small></h2>
+        <section class="vehiclesSection">
+            <div *ngFor="let vehicle of vehicles" class="vehicle" [ngClass]="{'notAvailable' : !vehicle.isAvailable}">
+
+                <img [attr.src]="'assets/' + vehicle.name.toLowerCase() + '.PNG'" 
+                    [attr.draggable]="true" (dragstart)="dragVehicle($event, vehicle)" (dragend)="markVehicleForSelection($event, vehicle)"/>
+                <span *ngIf="!vehicle.isAvailable" class="selectedText">Selected</span>
+                <br/>
+                <span class="name">{{vehicle.name}}</span><br/>
+                Max Distance - {{vehicle.max_distance}}<br/>
+                Speed - {{vehicle.speed}} megamiles/hr
+            
+            </div>
+        </section>
+    </section>
+
+    <section class="buttonArea">
+        <input type="button" value="Find Falcone">
+    </section>
+    
+</main>
+
