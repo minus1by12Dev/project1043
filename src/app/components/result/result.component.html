@@ -1,18 +1,16 @@
-<div class="draggable" id="draggable"
-    draggable="true" 
-    (dragstart)="drag($event)" >
-    <img src="https://s3.ap-south-1.amazonaws.com/content.angularvidhya.com/1043/donlon.PNG" width="150" height="auto"/>  
-</div>
+<main>
+    <div *ngIf="result.status === 'failure'" class="status">
+        <div class="alert alert-danger text-center">
+            Oops.!! The search party has returned empty handed. 
+        </div>
+        <input type="button" value="Try Again" routerLink="/selection">
+    </div>
 
-<div class="droppable"
-    (drop)="drop($event, '1st Droppable')" 
-    (dragover)="allowDrop($event)">
-    1st Droppable
-</div>
-
-
-<div class="droppable"
-    (drop)="drop($event, '2ndDroppable')" 
-    (dragover)="allowDrop($event)">
-    2nd Droppable
-</div>
+    <div *ngIf="result.status === 'success'" class="status">
+        <div class="alert alert-success text-center">
+            Success! Congratulations on finding Falcone. <b>King Shan</b> is mighty pleased.
+            <p class="mt-4 mb-2">Planet Found : {{result.planet_name}}</p>
+        </div>
+        <input type="button" value="Start Again" routerLink="/selection">
+    </div>
+</main>

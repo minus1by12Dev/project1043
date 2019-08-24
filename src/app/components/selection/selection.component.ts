@@ -3,6 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Planet } from 'src/app/models/planet';
 import { Vehicle } from 'src/app/models/vehicles';
 import { ToastrService } from 'ngx-toastr';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'ff-selection',
@@ -21,7 +22,8 @@ export class SelectionComponent implements OnInit {
 
   timeToTravel : number = 0;
 
-  constructor(private dataService : DataService, private toastr: ToastrService) { }
+  constructor(private dataService : DataService, private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -29,14 +31,14 @@ export class SelectionComponent implements OnInit {
 
     this.dataService.getPlanetsData().subscribe(
       (planets : Planet[]) => {
-        console.log(planets);
+        // console.log(planets);
         this.planets = planets;
-      } 
+      }
     )
 
     this.dataService.getVehiclesData().subscribe(
       (vehicles : Vehicle[]) => {
-        console.log(vehicles);
+        // console.log(vehicles);
         this.vehicles = [];
 
         // Repeating the vehicle the total_no that is available.
@@ -91,7 +93,7 @@ export class SelectionComponent implements OnInit {
 
   dragVehicle(ev, vehicle) {
 
-    console.log(vehicle);
+    // console.log(vehicle);
 
     var img = new Image(); 
     img.src = 'assets/' + vehicle.name.toLowerCase() + '.PNG'; 
@@ -108,7 +110,7 @@ export class SelectionComponent implements OnInit {
     ev.preventDefault();
 
     // We have the vehicle and the planet that it is being dropped on. So first we check if the vehicle can cover the distance or not
-    console.log(planet);
+    // console.log(planet);
 
     var vehicleData = JSON.parse(ev.dataTransfer.getData("text/plain"));
     if(vehicleData.max_distance < planet.distance) {
@@ -182,6 +184,79 @@ export class SelectionComponent implements OnInit {
     });
 
     this.timeToTravel = Math.max(...travelTimes);
+  }
+
+
+  findFalcone() {
+
+    let response = {};
+
+    if(this.planetSelectedCount < 4 || this.planetAssignedVehicles < 4) {
+      this.toastr.error("Please choose 4 planets & assign appropraite vehicles to them to proceed.");
+      return false;
+    } else if(this.planetSelectedCount === 4 && this.planetAssignedVehicles === 4) {
+
+      this.dataService.getToken().subscribe(
+        token => {
+
+          let body = {};
+          body['token'] = token;
+          body['planet_names'] = [];
+          body['vehicle_names'] = [];
+
+          this.planets.forEach(planet => {
+            if(planet.isSelected) {
+              body['planet_names'].push(planet.name);
+              if(planet.assignedVehicle) {
+                body['vehicle_names'].push(planet.assignedVehicle.name);
+              }
+            }
+          });
+
+          this.dataService.findFalcone(body).subscribe(
+            response => {
+              // console.log(response);
+            });
+        }, error => {
+
+          console.log('No token available. Mock Implementation kicks in.');
+
+          let randomPlanetIndex = Math.floor(Math.random() * (6 - 0)) + 0; 
+          let winnerPlanet = this.planets[randomPlanetIndex];
+          console.log(winnerPlanet);
+
+          let planetFound = false;
+
+          this.planets.forEach(planet => {
+            if(planet.isSelected) {
+              if(planet.name === winnerPlanet.name) {
+                planetFound = true;
+              }
+            }
+          });
+
+          if(planetFound) {
+
+            response = {
+              "planet_name" : winnerPlanet.name,
+              "status" : "success"
+            }
+          } else {
+
+            response = {
+              "status" : "failure"
+            }
+          }
+
+          let navigationExtras: NavigationExtras = {
+              queryParams: {
+                  response: JSON.stringify(response)
+              }
+          }
+          this.router.navigate(['result'], navigationExtras);
+
+        });
+    }
   }
 
 }

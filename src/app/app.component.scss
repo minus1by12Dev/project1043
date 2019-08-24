@@ -1,0 +1,30 @@
+header {
+    padding: 2rem;
+    background-color: #acacac;
+    color: #fff;
+    text-transform: capitalize;
+    font-size: 1.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h1 {
+        margin: 0rem;
+        cursor: pointer;
+
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+
+footer {
+    padding: 2rem;
+    background-color: #cdcdcd;
+
+    border-top: .1rem solid #777;
+    text-align: center;
+    color: #222;
+}

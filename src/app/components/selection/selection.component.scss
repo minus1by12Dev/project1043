@@ -32,7 +32,7 @@ main {
 
     h1 {
         font-size: 3rem;
-        margin-bottom: 0rem;
+        margin: 0rem;
     }
 
     h2 {
@@ -50,6 +50,7 @@ main {
 
         .planet {
             margin: 1rem;
+            margin-left: 0rem;
             cursor: pointer;
             position: relative;
 
@@ -84,6 +85,7 @@ main {
 
         .vehicle {
             margin: 1.5rem;
+            margin-left: 0rem;
             position: relative;
 
             .name {

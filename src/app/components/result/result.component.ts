@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'ff-result',
@@ -7,25 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultComponent implements OnInit {
 
-  constructor() { }
+  result : any;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-  }
 
-
-  allowDrop(ev) {
-    ev.preventDefault();
-  }
-
-  drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-  }
-
-  drop(ev, object) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    console.log(data);
-    console.log(object);
+    this.route.queryParams.subscribe(result => {
+      this.result = JSON.parse(result.response);
+      console.log(this.result);
+    });
   }
 
 }
